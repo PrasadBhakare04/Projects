@@ -20,7 +20,7 @@ $("phone").textContent = PHONE;
 $("phone").href = "tel:" + PHONE.replace(/[^+\d]/g, "");
 $("email").textContent = EMAIL;
 $("email").href = "mailto:" + EMAIL;
-$("title").textContent = "Ask " + CANDIDATE_NAME + " anything";
+$("title").textContent = "Ask " + CANDIDATE_NAME + " anything or paste Job description";
 document.title = CANDIDATE_NAME + " | Hire me chat";
 
 function addMsg(text, cls){

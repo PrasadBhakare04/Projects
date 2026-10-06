@@ -206,7 +206,7 @@ input::placeholder{
   color:var(--muted)
 }
 
-button.send{
+button.send {
   font:inherit;
   font-weight:600;
   background:var(--accent);
@@ -215,6 +215,25 @@ button.send{
   border-radius:12px;
   padding:0 20px;
   cursor:pointer
+}
+
+.contact a.download{
+  margin-top:8px;
+  align-self:flex-end;
+  background:var(--accent);
+  color:var(--accent-ink);
+  border:0;
+  border-radius:10px;
+  padding:8px 16px;
+  font-size:.95rem;
+  font-weight:600;
+}
+.contact a.download:hover{
+  opacity:.9;color:var(--accent-ink)
+}
+
+@media (max-width:640px){
+  .contact a.download{align-self:flex-start}
 }
 
 button.send:disabled{
