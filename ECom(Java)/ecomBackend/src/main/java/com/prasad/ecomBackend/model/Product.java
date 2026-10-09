@@ -26,9 +26,6 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private String category;
-
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
     private boolean available;
     private int quantity;
