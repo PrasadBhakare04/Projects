@@ -1,5 +1,6 @@
 package com.prasad.ecomBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +11,7 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -25,7 +26,10 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private String category;
-    private Date releaseDate;
+
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate releaseDate;
     private boolean available;
     private int quantity;
 }
