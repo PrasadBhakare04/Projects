@@ -4,6 +4,8 @@ import com.prasad.ecomBackend.model.Product;
 import com.prasad.ecomBackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ReactiveAdapterRegistry;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,12 @@ public class ProductController {
     ProductService service;
 
     @GetMapping("/products")
-    public List<Product> getAllProducts(){
-        return service.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts(){
+        return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/product/{id}")
+    public Product getProduct(@PathVariable int id){
+        return service.getProduct(id);
     }
 }
