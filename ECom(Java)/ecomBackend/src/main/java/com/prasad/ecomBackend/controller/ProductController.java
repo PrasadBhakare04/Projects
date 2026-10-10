@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.util.List;
 
 @RestController
@@ -51,5 +52,31 @@ public class ProductController {
         byte[] imageFile = product.getImageData();
         return new ResponseEntity<>(imageFile, HttpStatus.OK);
 
+    }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestPart Product product, @RequestPart MultipartFile imageFile){
+        Product product1 = null;
+        try{
+            product1 = service.updateProduct(id, product, imageFile);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        if(product1 != null)
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("failed to update", HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
+        Product product = service.getProduct(id);
+        if(product != null) {
+            service.deleteProduct(id);
+            return new ResponseEntity<>("Product deleted Successfully", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>("Can't delete product", HttpStatus.BAD_REQUEST);
     }
 }
