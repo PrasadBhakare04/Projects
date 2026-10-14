@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import API from "../axios";
 import AppContext from "../Context/Context";
 
 const Home = ({ selectedCategory }) => {
@@ -21,8 +21,8 @@ const Home = ({ selectedCategory }) => {
         const updatedProducts = await Promise.all(
           data.map(async (product) => {
             try {
-              const response = await axios.get(
-                `http://localhost:8080/api/product/${product.id}/image`,
+              const response = await API.get(
+                `/product/${product.id}/image`,
                 { responseType: "blob" }
               );
               const imageUrl = URL.createObjectURL(response.data);
@@ -71,13 +71,13 @@ const Home = ({ selectedCategory }) => {
           </h2>
         ) : (
           filteredProducts.map((product) => {
-            const { id, brand, name, price, productAvailable, imageUrl } =
+            const { id, brand, name, price, available, imageUrl } =
               product;
             const cardStyle = {
               width: "18rem",
               height: "12rem",
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 2px 3px",
-              backgroundColor: productAvailable ? "#fff" : "#ccc",
+              backgroundColor: available ? "#fff" : "#ccc",
             };
             return (
               <div
@@ -86,7 +86,7 @@ const Home = ({ selectedCategory }) => {
                   width: "18rem",
                   height: "24rem",
                   boxShadow: "rgba(0, 0, 0, 0.24) 0px 2px 3px",
-                  backgroundColor: productAvailable ? "#fff" : "#ccc",
+                  backgroundColor: available ? "#fff" : "#ccc",
                   margin: "10px",
                   display: "flex",
                   flexDirection: "column",
@@ -157,9 +157,9 @@ const Home = ({ selectedCategory }) => {
                           e.preventDefault();
                           addToCart(product);
                         }}
-                        disabled={!productAvailable}
+                        disabled={!available}
                       >
-                        {productAvailable ? "Add to Cart" : "Out of Stock"}
+                        {available ? "Add to Cart" : "Out of Stock"}
                       </button>
                     </div>
                   </div>

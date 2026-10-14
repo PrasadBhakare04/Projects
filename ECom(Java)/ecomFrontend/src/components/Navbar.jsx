@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Home from "./Home"
-import axios from "axios";
+import API from "../axios";
 
 const Navbar = ({ onSelectCategory, onSearch }) => {
   const getInitialTheme = () => {
@@ -20,7 +20,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
 
   const fetchData = async (value) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products");
+      const response = await API.get("/products");
       setSearchResults(response.data);
       console.log(response.data);
     } catch (error) {
@@ -33,8 +33,8 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     if (value.length >= 1) {
       setShowSearchResults(true)
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/products/search?keyword=${value}`
+      const response = await API.get(
+        `/products/search?keyword=${value}`
       );
       setSearchResults(response.data);
       setNoResults(response.data.length === 0);
@@ -56,6 +56,14 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     const newTheme = theme === "dark-theme" ? "light-theme" : "dark-theme";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
+  };
+
+  const logOut = () => {
+    try {
+      localStorage.removeItem("token");
+      navigate("/login", { replace: true });
+    } catch (err) {
+    }
   };
 
   useEffect(() => {
@@ -139,6 +147,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                   <i className="bi bi-sun-fill"></i>
                 )}
               </button>
+              
               <div className="d-flex align-items-center cart">
                 <a href="/cart" className="nav-link text-dark">
                   <i
@@ -159,6 +168,10 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                   onFocus={() => setSearchFocused(true)} // Set searchFocused to true when search bar is focused
                   onBlur={() => setSearchFocused(false)} // Set searchFocused to false when search bar loses focus
                 />
+                <form>
+                <button className="theme-btn" onClick={logOut}>Logout</button>
+
+                </form>
                 {showSearchResults && (
                   <ul className="list-group">
                     {searchResults.length > 0 ? (  

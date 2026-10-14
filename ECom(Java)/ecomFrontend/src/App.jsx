@@ -6,6 +6,9 @@ import Cart from "./components/Cart.jsx";
 import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
 import UpdateProduct from "./components/UpdateProduct";
+import Login from "./components/Login.jsx";
+import Register from "./components/Register.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppProvider } from "./Context/Context";
 
@@ -41,20 +44,18 @@ function App() {
     <AppProvider>
       <BrowserRouter>
         <Navbar onSelectCategory={handleCategorySelect}
-         />
+        />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home addToCart={addToCart} selectedCategory={selectedCategory}
-              />
-            }
-          />
-          <Route path="/add_product" element={<AddProduct />} />
-          <Route path="/product" element={<Product  />} />
-          <Route path="product/:id" element={<Product  />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/product/update/:id" element={<UpdateProduct />}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home addToCart={addToCart} selectedCategory={selectedCategory} />} />
+            <Route path="/add_product" element={<AddProduct />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="product/:id" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/product/update/:id" element={<UpdateProduct />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AppProvider>

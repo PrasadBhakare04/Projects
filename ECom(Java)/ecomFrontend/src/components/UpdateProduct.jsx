@@ -1,10 +1,10 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../axios";
 import "./UpdateProduct.css";
 
-const API_URL = "http://localhost:8080/api/product";
+const API_URL = "/product";
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -36,7 +36,7 @@ const UpdateProduct = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${API_URL}/${id}`);
+        const response = await API.get(`${API_URL}/${id}`);
         const data = response.data;
 
         if (!active) return;
@@ -56,7 +56,7 @@ const UpdateProduct = () => {
         });
 
         if (data.imageName) {
-          const imageResponse = await axios.get(
+          const imageResponse = await API.get(
             `${API_URL}/${id}/image`,
             { responseType: "blob" }
           );
@@ -158,7 +158,7 @@ const UpdateProduct = () => {
       let imageFile = image;
 
       if (!imageFile && product.imageName) {
-        const imageResponse = await axios.get(
+        const imageResponse = await API.get(
           `${API_URL}/${id}/image`,
           { responseType: "blob" }
         );
@@ -176,7 +176,7 @@ const UpdateProduct = () => {
         formData.append("imageFile", imageFile);
       }
 
-      await axios.put(`${API_URL}/${id}`, formData);
+      await API.put(`${API_URL}/${id}`, formData);
 
       alert("Product updated successfully!");
 
